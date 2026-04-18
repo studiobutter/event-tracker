@@ -5,15 +5,24 @@ import "./App.css";
 import { FaGithub } from "react-icons/fa";
 import fallbackEvents from "./data/events.json";
 
+function parseEventTime(event, key) {
+  return event.timezone
+    ? dayjs.tz(event[key], event.timezone)
+    : dayjs(event[key]);
+}
+
 function sortEvents(events) {
   const now = dayjs();
 
   return [...events].sort((a, b) => {
-    const aStart = dayjs(a.start);
-    const bStart = dayjs(b.start);
+    const aStart = parseEventTime(a, "start");
+    const bStart = parseEventTime(b, "start");
 
-    const aEnded = now.isAfter(dayjs(a.end));
-    const bEnded = now.isAfter(dayjs(b.end));
+    const aEnd = parseEventTime(a, "end");
+    const bEnd = parseEventTime(b, "end");
+
+    const aEnded = now.isAfter(aEnd);
+    const bEnded = now.isAfter(bEnd);
 
     if (aEnded !== bEnded) return aEnded ? 1 : -1;
 
@@ -26,7 +35,7 @@ export default function App() {
   const [events, setEvents] = useState([]);
 
   useEffect(() => {
-    const timer = setTimeout(() => {
+    const load = () => {
       fetch("https://evcdn.studiobutter.io.vn/events.json")
         .then((res) => {
           if (!res.ok) throw new Error("Fetch failed");
@@ -38,9 +47,15 @@ export default function App() {
           setEvents(fallbackEvents);
         })
         .finally(() => setLoading(false));
-    }, 5 * 60 * 1000); // 5 minutes
+    };
 
-    return () => clearTimeout(timer);
+    // ✅ load immediately
+    load();
+
+    // ✅ then refresh every 5 minutes
+    const interval = setInterval(load, 5 * 60 * 1000);
+
+    return () => clearInterval(interval);
   }, []);
 
   const sorted = sortEvents(events);
@@ -74,9 +89,11 @@ export default function App() {
 
       {/* Content */}
       <main className="container">
-        {sorted.map((e) => (
-          <EventItem key={e.id} event={e} />
-        ))}
+        {loading ? (
+          <p>Loading events...</p>
+        ) : (
+          sorted.map((e) => <EventItem key={e.id} event={e} />)
+        )}
       </main>
     </div>
   );
