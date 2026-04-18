@@ -1,0 +1,18 @@
+/* Reset-ish */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: system-ui, sans-serif;
+  background: #0f1115;
+  color: white;
+}
+
+/* Root should NOT interfere */
+#root {
+  margin: 0;
+}
