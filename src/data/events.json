@@ -9,14 +9,6 @@
   },
   {
     "id": "2",
-    "title": "[Genshin] Snezhnaya Sneak Peek",
-    "start": "2026-04-24T08:00:00",
-    "end": "2026-04-24T09:00:00",
-    "timezone": "America/Barbados",
-    "color": "#F6CE46"
-  },
-  {
-    "id": "3",
     "title": "HoYoFEST 2026",
     "start": "2026-07-30T00:00:00",
     "end": "2026-08-02T20:59:59",
@@ -24,7 +16,7 @@
     "color": "#7bb1ff"
   },
   {
-    "id": "4",
+    "id": "3",
     "title": "Genshin Impact v7.0 Special Program",
     "start": "2026-07-31T20:00:00",
     "end": "2026-08-02T21:00:00",
@@ -32,7 +24,7 @@
     "color": "#F6CE46"
   },
   {
-    "id": "5",
+    "id": "4",
     "title": "ChinaJoy 2026 - China's biggest entertainment convention",
     "start": "2026-07-31T08:00:00",
     "end": "2026-08-03T20:59:59",
